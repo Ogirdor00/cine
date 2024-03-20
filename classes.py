@@ -1,6 +1,6 @@
 from __future__ import annotations
 from dataclasses import dataclass
-import datetime as dt
+from datetime import datetime as dt
 import os
 import platform
 import pickle
@@ -161,11 +161,31 @@ def input_type(text:str, type:str='str', excepcio:bool=True, intro_cancellar:boo
     Al fer l'input mostra de manera automàtica el text (Intro=cancel·lar). Este text es pot ocultar amb el parametre intro_cancellar=False.
     '''
 
+
 #------------------------------------------------------------------------
 def obtin_data() -> dt.date|None:
     ''' Pregunta a l'usuari una data. Verifica que es correcta i avisa si no ho és.
     Retorna una data o None si l'usuari no n'ha introduit cap (fa intro).
     '''
+    while True:
+        try:
+            data = ''
+            d = None
+
+            data = input('Introdueix la data (DDMMAAAA):')
+            d = dt.strptime(data, '%d%m%Y')
+        except ValueError:
+            print('Data incorrecta, prova de nou.')
+            continue
+        if data == '':
+            return None
+        else:
+            if d < dt.now():
+                print('Sessió no existent.')
+                continue
+            return d.date()
+
+        
 
 #------------------------------------------------------------------------
 def obtin_data_hora() -> dt.datetime:
@@ -173,6 +193,25 @@ def obtin_data_hora() -> dt.datetime:
     Verifica que es la i l'hora són correctes i avisa si no ho és.
     Retorna el datetime corresponent. Si polsem intro llança l'excepció 'input_type_cancel·lat'
     '''
+    while True:
+        try:
+            hora = ''
+            h = None
+
+            data = obtin_data()
+
+            hora = input('Introdueix una hora (hhmm):')
+            h = dt.strptime(hora,'%H%M')
+        except ValueError:
+            print('Data o hora incorrecta, prova de nou.')
+            continue
+        if hora == '':
+            return None
+        else:
+            
+            return dt.combine(data,h.time())
+        
+        
    
 #==========================================================================================================
 # Persistència de dades.
@@ -228,38 +267,38 @@ def mostra_menu() -> None:
 #==========================================================================================================
 # Per a simplificar el programa, assumirem que els cines amb les sales estan creats.
         
-p1 = Pel_licula('La guerra de les galaxies')
-p2 = Pel_licula('Jocs de guerra')
-p3 = Pel_licula('Encontres en la 3a fase')
-p4 = Pel_licula('Indiana Jones')
+# p1 = Pel_licula('La guerra de les galaxies')
+# p2 = Pel_licula('Jocs de guerra')
+# p3 = Pel_licula('Encontres en la 3a fase')
+# p4 = Pel_licula('Indiana Jones')
 
-pel_licules.append(p1)
-pel_licules.append(p2)
-pel_licules.append(p3)
-pel_licules.append(p4)
+# pel_licules.append(p1)
+# pel_licules.append(p2)
+# pel_licules.append(p3)
+# pel_licules.append(p4)
 
-c1 = Cine('La salera')
-c2 = Cine('Estepark')
-cines.append(c1)
-cines.append(c2)
+# c1 = Cine('La salera')
+# c2 = Cine('Estepark')
+# cines.append(c1)
+# cines.append(c2)
 
-sala1_1 = Sala(c1, 'sala 1', 4, 4)
-sala2_1 = Sala(c1, 'sala 2', 5, 5)
-sala1_2 = Sala(c2, 'sala 1', 4, 4)
-sala2_2 = Sala(c2, 'sala 2', 5, 5)
+# sala1_1 = Sala(c1, 'sala 1', 4, 4)
+# sala2_1 = Sala(c1, 'sala 2', 5, 5)
+# sala1_2 = Sala(c2, 'sala 1', 4, 4)
+# sala2_2 = Sala(c2, 'sala 2', 5, 5)
 
-data1= dt.datetime(2024, 1, 1, 16, 0, 0)
-data2= dt.datetime(2024, 1, 1, 20, 0, 0)
+# data1= dt.datetime(2024, 1, 1, 16, 0, 0)
+# data2= dt.datetime(2024, 1, 1, 20, 0, 0)
 
-Sessio(sala1_1,data1,p1,5)
-Sessio(sala1_1,data2,p1,6)
-Sessio(sala2_1,data1,p2,5)
-Sessio(sala2_1,data2,p2,6)
+# Sessio(sala1_1,data1,p1,5)
+# Sessio(sala1_1,data2,p1,6)
+# Sessio(sala2_1,data1,p2,5)
+# Sessio(sala2_1,data2,p2,6)
 
-Sessio(sala1_2,data1,p1,5)
-Sessio(sala1_2,data2,p2,6)
-Sessio(sala2_2,data1,p3,5)
-Sessio(sala2_2,data2,p3,6)
+# Sessio(sala1_2,data1,p1,5)
+# Sessio(sala1_2,data2,p2,6)
+# Sessio(sala2_2,data1,p3,5)
+# Sessio(sala2_2,data2,p3,6)
 
 if __name__ == "__main__":
     llig_arxiu()
