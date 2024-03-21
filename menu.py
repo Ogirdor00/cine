@@ -1,6 +1,6 @@
-import ariel
-import tudor
-import rodrigo
+from ariel import *
+from tudor import *
+from rodrigo import *
 
 def mostra_menu() -> None:
     '''Mostra el menú principal. El primer punt no està implementat. Per a simplificar assumirem
