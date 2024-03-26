@@ -242,12 +242,12 @@ def llig_arxiu() -> None:
     ''' Si arxiu.pkl no existix el crea y grava en ell la llista de pel·licules i la de cines.
     Si arxiu.pkl existix el sobreescriu amb les llistes de pel·licules i de cines.
     '''
-    global pel_licules
-    global cines
+
     if not os.path.exists('arxiu.pkl'):
         grava_arxiu()
-        return
+        
     with open('arxiu.pkl', 'rb') as fd:
         pel_licules = pickle.load(fd)
         cines = pickle.load(fd)
+        return pel_licules, cines
 
