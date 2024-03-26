@@ -30,5 +30,7 @@ def mostra_menu() -> None:
 
 
 if __name__ == "__main__":
-    llig_arxiu()
+    p,c = llig_arxiu()
+    pel_licules.extend(p)
+    cines.extend(c)
     mostra_menu()
