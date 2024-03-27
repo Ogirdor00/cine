@@ -177,7 +177,7 @@ def input_type(text:str, type:str='str', excepcio:bool=True, intro_cancellar:boo
         except ValueError:
             print('Valor incorrecte')
 
-
+ 
 #------------------------------------------------------------------------
 def obtin_data() -> dt.date|None:
     ''' Pregunta a l'usuari una data. Verifica que es correcta i avisa si no ho és.
@@ -189,12 +189,13 @@ def obtin_data() -> dt.date|None:
             d = None
 
             data = input('Introdueix la data (DDMMAAAA):')
+            if data == '':
+                return None
             d = dt.strptime(data, '%d%m%Y')
         except ValueError:
             print('Data incorrecta, prova de nou.')
             continue
-        if data == '':
-            return None
+        
         else:
             if d < dt.now():
                 print('Sessió no existent.')
