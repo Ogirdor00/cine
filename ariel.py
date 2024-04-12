@@ -191,7 +191,7 @@ def mateniment_reserves(cine:Cine, sala:Sala) -> None:
             print(f'ID: {sessio.id}|| Data: {sessio.data_hora}|| Preu: {sessio.preu_entrada}')
             sessio.mostra_reserves()
         
-        s = input_type('Sessió? ' ,'int')        
+        s:int = input_type('Sessió? ' ,'int')    #type:ignore    
         sala.busca_sessio(s)
         demana_seient(s) 
         
